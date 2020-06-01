@@ -12,6 +12,7 @@ catkin-docker
 If there is one, you can get a bash shell in the container using `docker exec -it <container_id> /bin/bash`.
 To delete a container use `docker rm <container_id>`.
 Finally after each start of a new bash shell complete the set up using `source docker-build/install/setup.bash`.
+
 ##Running the simulator
 ```
 phxlaunch phoenix_unity_launch experiment.xlaunch launch_unity:=true environment:=floodedgrounds
