@@ -19,3 +19,11 @@ phxlaunch phoenix_unity_launch experiment.xlaunch launch_unity:=true environment
 To change the spawn location of the robot set the following arguments:
 ```
 phxlaunch phoenix_unity_launch experiment.xlaunch x:=10 y:=10 z:=1 yaw:=0
+```
+
+## Scene OBJ Exporter
+Exporter sometimes doesn't work when imported after the asset files if the unity project is too loaded. Follow the following order:
+
+* First open a new project.
+* Then import the [exporter](https://assetstore.unity.com/packages/tools/utilities/scene-obj-exporter-22250) from the asset store on Unity.
+* Then move the asset files under the `Assets` folder in the `\Documents\Unity\"project_name"\`.
