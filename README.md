@@ -27,3 +27,9 @@ Exporter sometimes doesn't work when imported after the asset files if the unity
 * First open a new project.
 * Then import the [exporter](https://assetstore.unity.com/packages/tools/utilities/scene-obj-exporter-22250) from the asset store on Unity.
 * Then move the asset files under the `Assets` folder in the `\Documents\Unity\"project_name"\`.
+
+### .obj to .pts conversion
+* On cloudcompare application, open the .obj file and select the mesh you want to convert to .pts file.
+* Use 'Edit > Mesh > Sample Points'.
+* Then select only .sampled from DBtree on the left panel of cloudcompare.
+* After selection, save it as ASCII(.xyz, .pts) file.
