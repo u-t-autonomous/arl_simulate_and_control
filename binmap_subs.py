@@ -1,3 +1,7 @@
+# This is the file to subscribe and save binary maps for different terrain types.
+# Here we use an example for the terrain type of road.
+# If you want to switch it to grass, just replace road with grass in this file.
+
 import rospy
 from nav_msgs.msg import OccupancyGrid
 import time
