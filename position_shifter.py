@@ -50,6 +50,36 @@ def extremum_points(terrain_file):
                     lower_extreme = float(line_split[3])
     return right_extreme, left_extreme, upper_extreme, lower_extreme
 
+def extremum_points_txt(terrain_file):
+    """Find the extremum span of a point cloud.
+
+    Args:
+        terrain_file (string): 3D Point cloud data.
+
+    Returns:
+        tuple: Values of 4 extreme edges 
+    """
+    terrain = open(terrain_file,'r')
+    first = True
+    for line in terrain:
+        line_split = line.split(" ")
+        if first == True:
+            right_extreme = float(line_split[0])
+            left_extreme = float(line_split[0])
+            upper_extreme = float(line_split[2])
+            lower_extreme = float(line_split[2])
+            first = False
+        else:
+            if float(line_split[1]) > right_extreme:
+                right_extreme = float(line_split[1])
+            elif float(line_split[1]) < left_extreme:
+                left_extreme = float(line_split[1])
+            if upper_extreme < float(line_split[3]):
+                upper_extreme = float(line_split[3])
+            elif lower_extreme > float(line_split[3]):
+                lower_extreme = float(line_split[3])
+    return right_extreme, left_extreme, upper_extreme, lower_extreme
+
 def gridworld_gen(file, right_end, left_end, upper_end, lower_end, grid_space):
     """Transform a 3D point cloud data in .obj format to a 2D gridworld.
        It includes different type of objects available in the floodedground environment.
@@ -391,6 +421,8 @@ def gridworld_gen_objects(file, right_end, left_end, upper_end, lower_end, grid_
 
 
 if __name__=="__main__":
+    ### This initial section is only to deal with old type of floodedground data (.obj)
+    
     #position_shifter("unityexport3.obj")
     
     #Print the extremum values of a point cloud
@@ -402,6 +434,15 @@ if __name__=="__main__":
     
     #Obtain a gridworld using both terrain types and detailed object information
     gridworld_gen_objects_terrain("unityexport3_last.obj","grass.npy","road.npy",525,-475,800,-200,2.5)
+    
+    ### This section is following the order on Readme
+    
+    #Print the extremum values of a point cloud
+    #You can use this information to specify the boundaries of your gridworld
+    print(extremum_points_txt("lejeune_export.txt"))
+    
+    #Obtain a gridworld
+    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2)
     
     #Obtain a gridworld as a costmap combining a finer costmap and point cloud data.
     costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,costmap_file = "costmap_0528_3.npy")
