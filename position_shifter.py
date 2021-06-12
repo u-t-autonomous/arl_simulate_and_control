@@ -85,7 +85,7 @@ def gridworld_gen(file, right_end, left_end, upper_end, lower_end, grid_space):
     df.to_excel(filepath, index=False)
     return gridworld
 
-def costmap_gen_txt(file, costmap_file right_end, left_end, upper_end, lower_end, grid_space):
+def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space, costmap_file = None):
     """Transform a costmap in .npy format to a costmap with a customized size as 
        a gridworld combining the point cloud data.
 
@@ -105,16 +105,17 @@ def costmap_gen_txt(file, costmap_file right_end, left_end, upper_end, lower_end
     y_state_num = int((upper_end - lower_end)/grid_space)
     gridworld = np.zeros((x_state_num*y_state_num,1))
     point_cloud = open(file,'r')
-    costmap = np.load('costmap_0528_3.npy')
-    for j in range(costmap.shape[0]):
-        for i in range(costmap.shape[1]):
-            # jth = y_state_num - int((i*0.2-20)//grid_space)-1
-            # ith = x_state_num - int((j*0.2+15)//grid_space)-1
-            jth = int(y_state_num - i-1+120)-550
-            ith = int(x_state_num - j-1-70)+150
-            if ith >= 0 and ith < x_state_num and jth >=0 and jth < y_state_num:
-                if costmap[j,i] > gridworld[jth*x_state_num + ith]:
-                    gridworld[jth*x_state_num + ith] = costmap[j,i]
+    if costmap_file is not None:
+        costmap = np.load(costmap_file)
+        for j in range(costmap.shape[0]):
+            for i in range(costmap.shape[1]):
+                # jth = y_state_num - int((i*0.2-20)//grid_space)-1
+                # ith = x_state_num - int((j*0.2+15)//grid_space)-1
+                jth = int(y_state_num - i-1+120)-550
+                ith = int(x_state_num - j-1-70)+150
+                if ith >= 0 and ith < x_state_num and jth >=0 and jth < y_state_num:
+                    if costmap[j,i] > gridworld[jth*x_state_num + ith]:
+                        gridworld[jth*x_state_num + ith] = costmap[j,i]
     for line in point_cloud:
         line_split = line.split(" ")
         x = float(line_split[0])
@@ -403,4 +404,4 @@ if __name__=="__main__":
     gridworld_gen_objects_terrain("unityexport3_last.obj","grass.npy","road.npy",525,-475,800,-200,2.5)
     
     #Obtain a gridworld as a costmap combining a finer costmap and point cloud data.
-    costmap_gen_txt("lejeune_export.txt","costmap_0528_3.npy",200,-200,150,-250,0.2)
+    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,costmap_file = "costmap_0528_3.npy")
