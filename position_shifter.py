@@ -26,7 +26,7 @@ def extremum_points(terrain_file):
         terrain_file (string): 3D Point cloud data.
 
     Returns:
-        tuple: Values of 4 extreme edges 
+        tuple: Values of 4 extreme edges
     """
     terrain = open(terrain_file,'r')
     first = True
@@ -57,7 +57,7 @@ def extremum_points_txt(terrain_file):
         terrain_file (string): 3D Point cloud data.
 
     Returns:
-        tuple: Values of 4 extreme edges 
+        tuple: Values of 4 extreme edges
     """
     terrain = open(terrain_file,'r')
     first = True
@@ -116,7 +116,7 @@ def gridworld_gen(file, right_end, left_end, upper_end, lower_end, grid_space):
     return gridworld
 
 def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space, costmap_file = None):
-    """Transform a costmap in .npy format to a costmap with a customized size as 
+    """Transform a costmap in .npy format to a costmap with a customized size as
        a gridworld combining the point cloud data.
 
     Args:
@@ -422,27 +422,27 @@ def gridworld_gen_objects(file, right_end, left_end, upper_end, lower_end, grid_
 
 if __name__=="__main__":
     ### This initial section is only to deal with old type of floodedground data (.obj)
-    
+
     #position_shifter("unityexport3.obj")
-    
+
     #Print the extremum values of a point cloud
     #You can use this information to specify the boundaries of your gridworld
     print(extremum_points("unityexport3_last.obj"))
-    
+
     #Obtain a gridworld using detailed object information
     gridworld_gen_objects("unityexport3_last.obj",525,-475,800,-200,2.5)
-    
+
     #Obtain a gridworld using both terrain types and detailed object information
     gridworld_gen_objects_terrain("unityexport3_last.obj","grass.npy","road.npy",525,-475,800,-200,2.5)
-    
+
     ### This section is following the order on Readme
-    
+
     #Print the extremum values of a point cloud
     #You can use this information to specify the boundaries of your gridworld
     print(extremum_points_txt("lejeune_export.txt"))
-    
+
     #Obtain a gridworld
     costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2)
-    
+
     #Obtain a gridworld as a costmap combining a finer costmap and point cloud data.
     costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,costmap_file = "costmap_0528_3.npy")
