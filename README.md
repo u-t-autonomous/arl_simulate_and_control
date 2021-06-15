@@ -30,6 +30,10 @@ After running the simulator, bunch of windows will pop up. You will mainly need 
 
 To match the orientation of the ground truth map and the orientation of the simulation, use `yaw:=3.1` while running the simulator.
 
+```
+phxlaunch phoenix_unity_launch experiment.xlaunch x:=10 y:=10 z:=1 yaw:=0 environment:=lejeune_emout
+```
+
 ## Map extraction from the Unity game engine
 
 To extract a map or gridworld from the existing Unity environments, you need to follow three steps.
@@ -47,7 +51,7 @@ Exporter sometimes doesn't work when imported after the asset files if the unity
 You need this step to convert .obj file to a simpler point cloud data format. 
 * On [cloudcompare](http://www.cloudcompare.org) application, open the .obj file and select the mesh you want to convert to .pts file.
 * Use 'Edit > Mesh > Sample Points'.
-* Then select only .sampled from DBtree on the left panel of cloudcompare.
+* Then select **only .sampled** from DBtree on the left panel of cloudcompare.
 * After selection, save it as ASCII(.xyz, .pts) file.
 
 ### 3. .pts to gridworld conversion
@@ -70,3 +74,5 @@ To perform the waypoint control of the robot, you need to use the `action_client
 You can find the extracted point clouds for the two main environments of Phoenix under `point_clouds` directory. However, they have different formats. The example runs in the `position_shifter.py` are written regarding this format difference.
 
 Also a ground truth overhead map of the lejeune_emout environment can be found in this [link](https://gitlab.sitcore.net/aimm/phoenix-r1/-/wikis/Tutorials/Miscellaneous/Creating-Semantic-and-Obstacle-Maps-from-Unity).
+
+You can download the asset files for the lejeune environment from this [gitlab link](https://gitlab.sitcore.net/arl/robotics-simulation/arl-unity-lejeune-emout).
