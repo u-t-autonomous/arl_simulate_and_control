@@ -115,7 +115,7 @@ def gridworld_gen(file, right_end, left_end, upper_end, lower_end, grid_space):
     df.to_excel(filepath, index=False)
     return gridworld
 
-def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space, costmap_file = None):
+def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space, costmap_i_offset, costmap_j_offset, costmap_file = None):
     """Transform a costmap in .npy format to a costmap with a customized size as
        a gridworld combining the point cloud data.
 
@@ -126,6 +126,8 @@ def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space,
         left_end (float): The min x-coordinate value you want to involve in your gridworld.
         upper_end (float): The max y-coordinate value you want to involve in your gridworld.
         lower_end (float): The min y-coordinate value you want to involve in your gridworld.
+        costmap_i_offset (int): The hand-tuned i offset for costmap to match the point cloud.
+        costmap_j_offset (int): The hand-tuned j offset for costmap to match the point cloud.
         grid_space (float): Dimension of each grid cell.
 
     Returns:
@@ -141,8 +143,8 @@ def costmap_gen_txt(file, right_end, left_end, upper_end, lower_end, grid_space,
             for i in range(costmap.shape[1]):
                 # jth = y_state_num - int((i*0.2-20)//grid_space)-1
                 # ith = x_state_num - int((j*0.2+15)//grid_space)-1
-                jth = int(y_state_num - i-1+120)-550
-                ith = int(x_state_num - j-1-70)+150
+                jth = int(y_state_num - i-1+costmap_i_offset)
+                ith = int(x_state_num - j-1+costmap_j_offset)
                 if ith >= 0 and ith < x_state_num and jth >=0 and jth < y_state_num:
                     if costmap[j,i] > gridworld[jth*x_state_num + ith]:
                         gridworld[jth*x_state_num + ith] = costmap[j,i]
@@ -442,7 +444,7 @@ if __name__=="__main__":
     print(extremum_points_txt("lejeune_export.txt"))
 
     #Obtain a gridworld
-    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2)
+    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,-430,80)
 
     #Obtain a gridworld as a costmap combining a finer costmap and point cloud data.
-    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,costmap_file = "costmap_0528_3.npy")
+    costmap_gen_txt("lejeune_export.txt",200,-200,150,-250,0.2,-430,80,costmap_file = "costmap_0528_3.npy")
